@@ -19,49 +19,75 @@
     />
   </head>
   <body>
-    <h1 class="ui center aligned header">QURANY</h1>
+    <h1 class="ui center aligned header">Qurany</h1>
     <div class="ui container">
-      <form class="ui form">
+      <form
+        class="ui form"
+        action="{{ url_for('generate_surah') }}"
+        method="post"
+      >
         <div class="field">
           <label>Surah</label>
-
-          <script type="text/javascript">
-            $(document).ready(function() {
-              $('#search-select').dropdown();
-            });
-          </script>
-
-          <select class="ui search selection dropdown" id="search-select">
-            <option value="">State</option>
-            <option value="AL">Alabama</option>
-            <option value="AK">Alaska</option>
-            <option value="AZ">Arizona</option>
-            <option value="AR">Arkansas</option>
-            <option value="CA">California</option>
-            <option value="CO">Colorado</option>
+          <select
+            class="ui search selection dropdown"
+            type="text"
+            name="selected_surah"
+          >
+            <option value="">Surah</option>
+            {% for surah in surahs %}
+            <option value="{{surah}}">{{ surah }}</option>
+            {% endfor %}
           </select>
         </div>
-        <div class="field">
-          <label>Last Name</label>
-          <input type="text" name="last-name" placeholder="Last Name" />
-        </div>
-        <div class="field">
-          <div class="ui checkbox">
-            <input type="checkbox" tabindex="0" class="hidden" />
-            <label>I agree to the Terms and Conditions</label>
+        <div class="ui equal width grid container">
+          <div class="row">
+            <div class="column field">
+              <label>Start</label>
+              <select
+                class="ui search selection dropdown"
+                type="number"
+                name="start_ayah"
+              >
+                <option value="">Start</option>
+                {% for i in range(100) %}
+                <option value="{{i+1}}">{{i+1}}</option>
+                {% endfor%}
+              </select>
+            </div>
+            <div class="column field">
+              <label>End</label>
+              <select
+                class="ui search selection dropdown"
+                type="number"
+                name="end_ayah"
+              >
+                <option value="">End</option>
+                {% for i in range(100) %}
+                <option value="{{i+1}}">{{i+1}}</option>
+                {% endfor%}
+              </select>
+            </div>
           </div>
         </div>
-        <button class="ui button" type="submit">Submit</button>
+        <button class="ui button" type="submit">Generate</button>
       </form>
+      {% if surah_path %}
       <div class="ui container">
-        <audio class="center" controls>
+        <audio class="center" controls loop>
           <source
-            src="{{ url_for('static', filename='Memories.mp3') }}"
+            src="{{ surah_path }}"
             type="audio/mpeg"
           />
         </audio>
       </div>
+      {% endif %}
     </div>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $('.ui.search.selection.dropdown').dropdown();
+      });
+    </script>
   </body>
 </html>
 
@@ -75,5 +101,8 @@
     margin-left: auto;
     margin-right: auto;
     width: 40%;
+  }
+  div.column {
+    margin-bottom: 1em;
   }
 </style>
