@@ -39,27 +39,6 @@
         <button class="ui button" type="submit">
           Submit
         </button>
-
-      </form>
-
-      <form class="ui form" action="{{ url_for('generate_surah') }}" method="post">
-        <div class="ui two column row grid">
-          <div class="row">
-            <div class="column field">
-              <div class="ui action input">
-                <input type="text" placeholder="Start" />
-                <button class="ui button">Set as start time</button>
-              </div>
-            </div>
-
-            <div class="column field">
-              <div class="ui action input">
-                <input type="text" placeholder="End" />
-                <button class="ui button">Set as end time</button>
-              </div>
-            </div>
-          </div>
-        </div>
       </form>
 
       {% if surah_path %}
@@ -90,6 +69,36 @@
         );
       </script>
 
+      <form class="ui form" action="{{ url_for('generate_surah') }}" method="post">
+        <div class="ui stackable two column row grid">
+          <div class="row">
+            <div class="column field">
+              <div class="ui action input">
+                <input type="text" placeholder="Set current time as *Start Time*" />
+                <button class="ui button">
+                  <i class="stopwatch icon"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="column field">
+              <div class="ui action input">
+                <input type="text" placeholder="Set current time as *Stop Time*" />
+                <button class="ui button">
+                  <i class="stopwatch icon"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <center>
+          <button class="ui button" type="submit">
+            <i class="play icon"></i>
+          </button>
+        </center>
+      </form>
+
       {% endif %}
     </div>
 
@@ -107,10 +116,10 @@
   }
   audio.center {
     display: block;
-    margin-top: 3em;
+    margin-top: 1em;
     margin-left: auto;
     margin-right: auto;
-    width: 40%;
+    width: 100%;
   }
 
   div.column {
@@ -118,15 +127,20 @@
     vertical-align: top;
   }
 
+  form.ui.form {
+    margin-top: 3em;
+  }
+
   button.ui.button {
     margin-bottom: 1em;
   }
 
+  div.ui.stackable {
+    margin-bottom: 1em;
+  }
+
   @media only screen and (max-width: 600px) {
-    body {
-      background-color: lightblue;
-    }
-    select.ui.search.selectio.dropdown {
+    select.ui.search.selection.dropdown {
       width: 10%;
     }
   }
