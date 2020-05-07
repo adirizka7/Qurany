@@ -70,8 +70,9 @@
       </script>
 
       <form class="ui form" action="{{ url_for('generate_surah') }}" method="post">
-        <div class="ui stackable two column row grid">
+        <div class="ui stackable three column row grid">
           <div class="row">
+
             <div class="column field">
               <div class="ui action input">
                 <input type="text" placeholder="Set current time as *Start Time*" />
@@ -89,14 +90,15 @@
                 </button>
               </div>
             </div>
+
+            <div class="column field">
+                <button class="ui button">
+                  <i class="play icon"></i>
+                </button>
+            </div>
+
           </div>
         </div>
-
-        <center>
-          <button class="ui button" type="submit">
-            <i class="play icon"></i>
-          </button>
-        </center>
       </form>
 
       {% endif %}

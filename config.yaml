@@ -1,0 +1,3 @@
+directory:
+  surahs_folder: 'static/surahs'
+  surahs_mapping: 'util/surahs.yaml'
