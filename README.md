@@ -1,7 +1,7 @@
 # Qurany
-Qurany is a service that aims to help people memorize the holy Quran by rehearing the same verse over and over again. This service is not released yet, I wanted to get the following features done first.
+Qurany is a service that aims to help people memorize the holy Quran by rehearing the same verse over and over again. This service is not released yet cause I want to finish the core feature first
 
-## How to run
+## Quick Start
 ```
 $ pip install -r requirements.txt
 ```
