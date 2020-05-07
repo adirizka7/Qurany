@@ -4,7 +4,10 @@
     <!-- Standard Meta -->
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
 
     <!-- Site Properties -->
     <title>
@@ -28,7 +31,11 @@
         <div class="field">
           <label>Surah</label>
 
-          <select class="ui search selection dropdown" type="text" name="selected_surah">
+          <select
+            class="ui search selection dropdown"
+            type="text"
+            name="selected_surah"
+          >
             <option value="">Surah</option>
             {% for surah in surahs %}
             <option value="{{surah}}">{{ surah }}</option>
@@ -42,14 +49,6 @@
       </form>
 
       {% if surah_path %}
-
-      <script type="text/javascript">
-        function audio() {
-          if (document.getElementById('music').currentTime >= 8) {
-            document.getElementById('music').currentTime = 5;
-          }
-        }
-      </script>
 
       <div class="ui container">
         <audio class="center" id="track" controls loop>
@@ -67,36 +66,59 @@
           },
           false,
         );
+        function setCurrentTime(id) {
+            document.getElementById(id).value = (audio.currentTime * 1000);
+        }
       </script>
 
       <form class="ui form" action="{{ url_for('generate_surah') }}" method="post">
         <div class="ui stackable three column row grid">
           <div class="row">
+            <div class="column field">
+              <form
+                class="ui form"
+                action="{{ url_for('generate_surah')}}"
+                method="post"
+              >
+                <div class="ui action input">
+                  <input
+                    type="text"
+                    id="startTime"
+                    placeholder="Set current time as *Start Time*"
+                  />
+                  <button
+                    class="ui button"
+                    onclick="setCurrentTime('startTime')"
+                    type="button"
+                  >
+                    <i class="stopwatch icon"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
 
             <div class="column field">
               <div class="ui action input">
-                <input type="text" placeholder="Set current time as *Start Time*" />
-                <button class="ui button">
+                <input
+                  type="text"
+                  id="endTime"
+                  placeholder="Set current time as *Stop Time*"
+                />
+                <button
+                  class="ui button"
+                  onclick="setCurrentTime('endTime')"
+                  type="button"
+                >
                   <i class="stopwatch icon"></i>
                 </button>
               </div>
             </div>
 
             <div class="column field">
-              <div class="ui action input">
-                <input type="text" placeholder="Set current time as *Stop Time*" />
-                <button class="ui button">
-                  <i class="stopwatch icon"></i>
-                </button>
-              </div>
+              <button class="ui button">
+                <i class="play icon"></i>
+              </button>
             </div>
-
-            <div class="column field">
-                <button class="ui button">
-                  <i class="play icon"></i>
-                </button>
-            </div>
-
           </div>
         </div>
       </form>
