@@ -1,7 +1,7 @@
 # Surahs
-This folder used by Qurany as a storage to access the murottal file. Currently only 1 Qari is supported that is Syaikh Mishary Rashid Alafasy. In the future, Qurany aims to support more Qari, but first we need to get the basic feature done first.
+This folder is used by Qurany as a storage to access the murottal file. Currently only 1 Qari is supported because of the naming convention. In the future, Qurany aims to support more Qari. It's a work in progress. Cheers.
 
-A glimpse of local folder, to show the format we used to access the surahs file :
+A glimpse of local folder, to show the format Qurany used to access the surahs file :
 ```
 $ ls Qurany/static/surahs/
 ➜  surahs git:(master) ✗ ls
