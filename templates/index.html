@@ -51,15 +51,21 @@
       {% if surah_path %}
 
       <div class="ui container">
-        <audio class="center" id="track" controls loop>
+        <audio class="center" id="track" preload="metadata" controls loop>
           <source src="{{ surah_path }}" type="audio/mpeg" />
         </audio>
       </div>
 
       <script type="text/javascript">
         var audio = document.getElementById('track');
+
+        var duration;
+        audio.onloadedmetadata = function() {
+          duration = Math.round(audio.duration * 1000);
+        };
+
         var startTime = 0;
-        var endTime = Number.MAX_VALUE;
+        var endTime = duration - 100;
         audio.addEventListener(
           'timeupdate',
           function() {
@@ -72,8 +78,15 @@
         );
 
         function setCurrentTime(id) {
-          var currentTimeMs = audio.currentTime * 1000;
-          document.getElementById(id).value = currentTimeMs;
+          var currentTimeMs = Math.round(audio.currentTime * 1000);
+          if (id == 'endTime') {
+            document.getElementById(id).value = Math.max(
+              document.getElementById('startTime').value,
+              currentTimeMs,
+            );
+          } else {
+            document.getElementById(id).value = Math.max(startTime, currentTimeMs);
+          }
         }
 
         function loopWithinTimeRange() {
@@ -81,11 +94,26 @@
           endTime = document.getElementById('endTime').value;
           if (startTime == '' || endTime == '') {
             startTime = 0;
-            endTime = Number.MAX_VALUE;
-            console.log(startTime, endTime);
+            endTime = duration;
+            alert('*Start time* and *end time* are not set');
+            return;
+          } else if (+startTime > +endTime) {
+            alert('*Start time* should be lower than *end time*');
+            document.getElementById('startTime').value = 0;
+            document.getElementById('endTime').value = duration;
             return;
           }
           audio.currenTime = startTime / 1000;
+        }
+
+        function addTime(id) {
+          addedTime = +document.getElementById(id).value + 100;
+          document.getElementById(id).value = Math.min(duration, addedTime);
+        }
+
+        function substractTime(id) {
+          substractedTime = +document.getElementById(id).value - 100;
+          document.getElementById(id).value = Math.max(0, substractedTime);
         }
       </script>
 
@@ -95,11 +123,8 @@
             <div class="field">
               <div class="three fields">
                 <div class="ui action input field">
-                  <input
-                    type="text"
-                    id="startTime"
-                    placeholder="Set current time as start time"
-                  />
+                  <input type="text" id="startTime" placeholder="Start time" />
+
                   <button
                     class="ui button"
                     type="button"
@@ -107,19 +132,48 @@
                   >
                     <i class="stopwatch icon"></i>
                   </button>
+
+                  <button
+                    class="ui button"
+                    type="button"
+                    onclick="addTime('startTime')"
+                  >
+                    <i class="plus icon"></i>
+                  </button>
+
+                  <button
+                    class="ui button"
+                    type="button"
+                    onclick="substractTime('startTime')"
+                  >
+                    <i class="minus icon"></i>
+                  </button>
                 </div>
                 <div class="ui action input field">
-                  <input
-                    type="text"
-                    id="endTime"
-                    placeholder="Set current time as start time"
-                  />
+                  <input type="text" id="endTime" placeholder="End time" />
+
                   <button
                     class="ui button"
                     type="button"
                     onclick="setCurrentTime('endTime')"
                   >
                     <i class="stopwatch icon"></i>
+                  </button>
+
+                  <button
+                    class="ui button"
+                    type="button"
+                    onclick="addTime('endTime')"
+                  >
+                    <i class="plus icon"></i>
+                  </button>
+
+                  <button
+                    class="ui button"
+                    type="button"
+                    onclick="substractTime('endTime')"
+                  >
+                    <i class="minus icon"></i>
                   </button>
                 </div>
                 <div class="field">
