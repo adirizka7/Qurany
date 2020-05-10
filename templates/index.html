@@ -84,8 +84,14 @@
               document.getElementById('startTime').value,
               currentTimeMs,
             );
-          } else {
-            document.getElementById(id).value = Math.max(startTime, currentTimeMs);
+          } else if (id == 'startTime') {
+            console.log(document.getElementById('endTime').value == '');
+            document.getElementById(id).value = Math.min(
+              document.getElementById('endTime').value == ''
+                ? duration
+                : document.getElementById('endTime').value,
+              currentTimeMs,
+            );
           }
         }
 
@@ -103,7 +109,8 @@
             document.getElementById('endTime').value = duration;
             return;
           }
-          audio.currenTime = startTime / 1000;
+          audio.currentTime = startTime / 1000;
+          audio.play();
         }
 
         function addTime(id) {
