@@ -15,6 +15,7 @@
     </title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.js"></script>
+    <script src="{{ url_for('static', filename='js/index.js')}}?random={{ range(1, 1e7 | int) | random }}"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.css"
@@ -54,75 +55,10 @@
         <audio class="center" id="track" preload="metadata" controls loop>
           <source src="{{ surah_path }}" type="audio/mpeg" />
         </audio>
+        <script>
+          extractAudioInfo();
+        </script>
       </div>
-
-      <script type="text/javascript">
-        var audio = document.getElementById('track');
-
-        var duration;
-        audio.onloadedmetadata = function() {
-          duration = Math.round(audio.duration * 1000);
-        };
-
-        var startTime = 0;
-        var endTime = duration - 100;
-        audio.addEventListener(
-          'timeupdate',
-          function() {
-            var currentTimeMs = audio.currentTime * 1000;
-            if (currentTimeMs >= endTime) {
-              audio.currentTime = startTime / 1000;
-            }
-          },
-          false,
-        );
-
-        function setCurrentTime(id) {
-          var currentTimeMs = Math.round(audio.currentTime * 1000);
-          if (id == 'endTime') {
-            document.getElementById(id).value = Math.max(
-              document.getElementById('startTime').value,
-              currentTimeMs,
-            );
-          } else if (id == 'startTime') {
-            console.log(document.getElementById('endTime').value == '');
-            document.getElementById(id).value = Math.min(
-              document.getElementById('endTime').value == ''
-                ? duration
-                : document.getElementById('endTime').value,
-              currentTimeMs,
-            );
-          }
-        }
-
-        function loopWithinTimeRange() {
-          startTime = document.getElementById('startTime').value;
-          endTime = document.getElementById('endTime').value;
-          if (startTime == '' || endTime == '') {
-            startTime = 0;
-            endTime = duration;
-            alert('*Start time* and *end time* are not set');
-            return;
-          } else if (+startTime > +endTime) {
-            alert('*Start time* should be lower than *end time*');
-            document.getElementById('startTime').value = 0;
-            document.getElementById('endTime').value = duration;
-            return;
-          }
-          audio.currentTime = startTime / 1000;
-          audio.play();
-        }
-
-        function addTime(id) {
-          addedTime = +document.getElementById(id).value + 100;
-          document.getElementById(id).value = Math.min(duration, addedTime);
-        }
-
-        function substractTime(id) {
-          substractedTime = +document.getElementById(id).value - 100;
-          document.getElementById(id).value = Math.max(0, substractedTime);
-        }
-      </script>
 
       <div class="ui grid">
         <div class="ui form sixteen wide column centered">
