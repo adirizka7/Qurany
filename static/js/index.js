@@ -30,7 +30,6 @@ function setCurrentTime(id) {
       currentTimeMs,
     );
   } else if (id == 'startTime') {
-    console.log(document.getElementById('endTime').value == '');
     document.getElementById(id).value = Math.min(
       document.getElementById('endTime').value == ''
         ? duration
@@ -66,4 +65,12 @@ function addTime(id) {
 function substractTime(id) {
   substractedTime = +document.getElementById(id).value - 100;
   document.getElementById(id).value = Math.max(0, substractedTime);
+}
+
+function resetTime(id) {
+  if (id == 'startTime') {
+    document.getElementById(id).value = 0;
+  } else if (id == 'endTime') {
+    document.getElementById(id).value = duration;
+  }
 }
