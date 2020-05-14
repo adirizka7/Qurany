@@ -22,7 +22,7 @@ function extractAudioInfo() {
   );
 }
 
-function toTimeFormat(s) {
+function msToTimeFormat(s) {
 
     function pad(n, z) {
         z = z || 2;
@@ -44,8 +44,23 @@ function toTimeFormat(s) {
     return timeFormat;
 }
 
+function TimeToMsFormat(s) {
+    console.log(s);
+    var time = s.split(':').reverse();
+
+    result = 0;
+    multiplier = [1000, 60000, 3600000];
+    for(i=0; i<time.length; i++) {
+        result += parseFloat(time[i]) * multiplier[i];
+    }
+
+    console.log(result);
+}
+
 function setCurrentTime(id) {
   var currentTimeMs = Math.round(audio.currentTime * 1000);
+  timeFormat = msToTimeFormat(currentTimeMs);
+  console.log(TimeToMsFormat(timeFormat));
   if (id == 'endTime') {
     document.getElementById(id).value = Math.max(
       document.getElementById('startTime').value,
