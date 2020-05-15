@@ -23,56 +23,62 @@ function extractAudioInfo() {
 }
 
 function msToTimeFormat(s) {
+  function pad(n, z) {
+    z = z || 2;
+    return ('00' + n).slice(-z);
+  }
 
-    function pad(n, z) {
-        z = z || 2;
-        return ('00' + n).slice(-z);
-    }
+  var ms = s % 1000;
+  s = (s - ms) / 1000;
+  var secs = s % 60;
+  s = (s - secs) / 60;
+  var mins = s % 60;
+  var hrs = (s - mins) / 60;
 
-    var ms = s % 1000;
-    s = (s - ms) / 1000;
-    var secs = s % 60;
-    s = (s- secs) / 60;
-    var mins = s % 60;
-    var hrs = (s - mins) / 60;
+  var timeFormat = pad(mins) + ':' + pad(secs) + '.' + pad(ms, 3);
+  if (pad(hrs) != '00') {
+    timeFormat = pad(hrs) + timeFormat;
+  }
 
-    var timeFormat = pad(mins) + ':' + pad(secs) + '.' + pad(ms, 3);
-    if (pad(hrs) != '00') {
-        timeFormat = pad(hrs) + timeFormat
-    }
-
-    return timeFormat;
+  return timeFormat;
 }
 
 function TimeToMsFormat(s) {
-    console.log(s);
-    var time = s.split(':').reverse();
+  var time = s.split(':').reverse();
 
-    result = 0;
-    multiplier = [1000, 60000, 3600000];
-    for(i=0; i<time.length; i++) {
-        result += parseFloat(time[i]) * multiplier[i];
-    }
+  result = 0;
+  multiplier = [1000, 60000, 3600000];
+  for (i = 0; i < time.length; i++) {
+    result += parseFloat(time[i]) * multiplier[i];
+  }
 
-    console.log(result);
+  return result;
 }
 
 function setCurrentTime(id) {
   var currentTimeMs = Math.round(audio.currentTime * 1000);
-  timeFormat = msToTimeFormat(currentTimeMs);
-  console.log(TimeToMsFormat(timeFormat));
   if (id == 'endTime') {
-    document.getElementById(id).value = Math.max(
-      document.getElementById('startTime').value,
-      currentTimeMs,
-    );
+    formattedStartTime = '00:00.00';
+    if (document.getElementById('startTime').value != '') {
+        formattedStartTime = document.getElementById('startTime').value;
+    }
+
+    msStartTime = TimeToMsFormat(formattedStartTime);
+    msEndTime = Math.max(msStartTime, currentTimeMs);
+    formattedEndTime = msToTimeFormat(msEndTime);
+
+    document.getElementById(id).value = formattedEndTime;
   } else if (id == 'startTime') {
-    document.getElementById(id).value = Math.min(
-      document.getElementById('endTime').value == ''
-        ? duration
-        : document.getElementById('endTime').value,
-      currentTimeMs,
-    );
+    formattedEndTime = '00:00.00';
+    if (document.getElementById('endTime').value != '') {
+      formattedEndTime = document.getElementById('endTime').value;
+    }
+
+    msEndTime = TimeToMsFormat(formattedEndTime);
+    msStartTime = Math.min(msEndTime, currentTimeMs);
+    formattedStartTime = msToTimeFormat(msStartTime);
+
+    document.getElementById(id).value = formattedStartTime;
   }
 }
 
