@@ -16,6 +16,7 @@ def index():
 @app.route('/generate_surah', methods=['POST'])
 def generate_surah():
     selected_surah = request.form.get('selected_surah')
+    selected_qari = request.form.get('selected_qari')
 
     # to get surah's id from '1. Al-Fatihah' format
     selected_surah = selected_surah.split('. ')
@@ -28,6 +29,7 @@ def generate_surah():
 
     surah_path = os.path.join(
         cfg['directory']['surahs_folder'],
+        selected_qari,
         f'{selected_surah:03d}.mp3'
     )
 

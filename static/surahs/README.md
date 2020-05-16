@@ -1,9 +1,34 @@
 # Surahs
-This folder is used by Qurany as a storage to access the murottal file. Currently only 1 Qari is supported because of the naming convention. In the future, Qurany aims to support more Qari. It's a work in progress. Cheers.
-
+This folder is used by Qurany as a storage to access the murottal file. 
 A glimpse of local folder, to show the format Qurany used to access the surahs file :
+
 ```
-$ ls Qurany/static/surahs/
-➜  surahs git:(master) ✗ ls
-. . . . . 099.mp3  101.mp3  103.mp3  105.mp3  107.mp3  109.mp3  111.mp3  113.mp3
+➜  GIT tree Qurany/static/surahs 
+Qurany/static/surahs
+├── Abdullah Awad Al-Juhany
+│   ├── 100.mp3
+│   ├── 101.mp3
+│   ├── 102.mp3
+│   └── . . .
+├── Abdul Rahman As-Sudais
+│   ├── 100.mp3
+│   ├── 101.mp3
+│   ├── 102.mp3
+│   └── . . .
+├── Fatih Seferagic
+│   ├── 100.mp3
+│   ├── 101.mp3
+│   ├── 102.mp3
+│   └── . . .
+├── Mishary Rashid Alafasy
+│   ├── 001.mp3
+│   ├── 078.mp3
+│   ├── 079.mp3
+│   └── . . .
+├── README.md
+└── Saud Ash-Shuraim
+    ├── 100.mp3
+    ├── 101.mp3
+    ├── 102.mp3
+    └── . . .
 ```
