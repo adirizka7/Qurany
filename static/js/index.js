@@ -43,7 +43,7 @@ function msToTimeFormat(s) {
   return timeFormat;
 }
 
-function TimeToMsFormat(s) {
+function timeToMsFormat(s) {
   var time = s.split(':').reverse();
 
   result = 0;
@@ -63,19 +63,20 @@ function setCurrentTime(id) {
         formattedStartTime = document.getElementById('startTime').value;
     }
 
-    msStartTime = TimeToMsFormat(formattedStartTime);
+    msStartTime = timeToMsFormat(formattedStartTime);
     msEndTime = Math.max(msStartTime, currentTimeMs);
     formattedEndTime = msToTimeFormat(msEndTime);
 
     document.getElementById(id).value = formattedEndTime;
   } else if (id == 'startTime') {
-    formattedEndTime = '00:00.00';
+    msEndTime = duration;
     if (document.getElementById('endTime').value != '') {
       formattedEndTime = document.getElementById('endTime').value;
+      msEndTime = timeToMsFormat(formattedEndTime);
     }
 
-    msEndTime = TimeToMsFormat(formattedEndTime);
     msStartTime = Math.min(msEndTime, currentTimeMs);
+    console.log(msEndTime, currentTimeMs);
     formattedStartTime = msToTimeFormat(msStartTime);
 
     document.getElementById(id).value = formattedStartTime;
@@ -101,19 +102,27 @@ function loopWithinTimeRange() {
 }
 
 function addTime(id) {
-  addedTime = +document.getElementById(id).value + 100;
-  document.getElementById(id).value = Math.min(duration, addedTime);
+  msTime = timeToMsFormat(document.getElementById(id).value);
+  addedTime = +msTime + 100;
+  newMsTime = Math.min(duration, addedTime);
+  formattedTime = msToTimeFormat(newMsTime);
+  document.getElementById(id).value = formattedTime;
 }
 
 function substractTime(id) {
-  substractedTime = +document.getElementById(id).value - 100;
-  document.getElementById(id).value = Math.max(0, substractedTime);
+  msTime = timeToMsFormat(document.getElementById(id).value);
+  substractedTime = +msTime - 100;
+  newMsTime = Math.max(0, substractedTime);
+  formattedTime = msToTimeFormat(newMsTime);
+  document.getElementById(id).value = formattedTime;
 }
 
 function resetTime(id) {
   if (id == 'startTime') {
-    document.getElementById(id).value = 0;
+    formattedStartTime = msToTimeFormat('0');
+    document.getElementById(id).value = formattedStartTime;
   } else if (id == 'endTime') {
-    document.getElementById(id).value = duration;
+    formattedEndTime = msToTimeFormat(duration);
+    document.getElementById(id).value = formattedEndTime;
   }
 }
