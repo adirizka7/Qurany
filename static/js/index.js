@@ -88,15 +88,17 @@ function loopWithinTimeRange() {
   endTime = document.getElementById('endTime').value;
   if (startTime == '' || endTime == '') {
     startTime = 0;
+    formattedStartTime = msToTimeFormat(startTime);
     endTime = duration;
+    formattedEndTime = msToTimeFormat(endTime);
+    document.getElementById('startTime').value = formattedStartTime;
+    document.getElementById('endTime').value = formattedEndTime;
     alert('*Start time* and *end time* are not set');
     return;
-  } else if (+startTime > +endTime) {
-    alert('*Start time* should be lower than *end time*');
-    document.getElementById('startTime').value = 0;
-    document.getElementById('endTime').value = duration;
-    return;
   }
+
+  startTime = timeToMsFormat(startTime)
+  endTime = timeToMsFormat(endTime)
   audio.currentTime = startTime / 1000;
   audio.play();
 }
