@@ -4,9 +4,15 @@ from config import cfg
 
 import os
 import yaml
+import logging
 
 app = Flask(__name__)
-
+logging.basicConfig(
+    format='%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s',
+    datefmt='%Y-%m-%d:%H:%M:%S',
+    level=logging.INFO
+)
+logger = logging.getLogger(__name__)
 
 @app.route('/')
 def index():
@@ -33,7 +39,7 @@ def generate_surah():
         f'{selected_surah:03d}.mp3'
     )
 
-    print(surah_path)
+    logger.info(surah_path)
     return render_template('index.html', surah_path=surah_path)
 
 
